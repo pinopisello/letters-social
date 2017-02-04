@@ -1,7 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { render  as ReactDOM} from 'react-dom';
 import { Provider } from 'react-redux';
-
 import { App } from './containers/App';
 import { Home, SinglePost, Login, NotFound, Profile } from './containers';
 import { Router, Route } from './components/router';
@@ -17,27 +16,16 @@ const store = configureStore(initialReduxState);
 
 // Function that wraps ReactDOM.render and renders the app w/ current location
 export const renderApp = (state) => {
-    render(
+    ReactDOM(
         <Provider store={store}>
-            <Router {...state}>
-                <Route
-                    path="/"
-                    index={Home}
-                    component={App}>
-                    <Route
-                        path="posts/:post"
-                        component={SinglePost} />
-                        <Route
-                            path="login"
-                            component={Login}
-                        />
-                        <Route
-                            component={Profile}
-                            path="profile"
-                        />
-                        <Route path="*" component={NotFound} />
-                    </Route>
-            </Router>
+             <Router {...state}>
+        <Route  path="/" index={Home}       component={App}>
+	        <Route  path="posts/:post"      component={SinglePost} />
+	        <Route  path="login"            component={Login}  />
+	        <Route  path="profile"          component={Profile}  />
+	        <Route path="*"                 component={NotFound} />
+        </Route>
+    </Router>
         </Provider>,
     document.getElementById('app'),
   );

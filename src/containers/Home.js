@@ -20,6 +20,7 @@ class Home extends Component {
     };
   }
 
+  //carico primi 5 posts quando il component e' montato nel DOM
   componentDidMount() {
     fetchPosts(5).then((posts) => this.setState({ loaded: true, posts }))
                   .catch(err => console.error(err));
