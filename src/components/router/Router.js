@@ -55,8 +55,11 @@ export class Router extends Component {
       //   params,
       // };
 
+      
+     
       const hasIndexRoute = index && path === finalProps.location;
 
+      //Se la route in esame ha una props.index, allora tale component viene nestato in esso!
       const children = hasIndexRoute
                 ? React.createElement(component, finalProps, React.createElement(index, finalProps))
                 : React.createElement(component, finalProps);
@@ -79,6 +82,8 @@ export class Router extends Component {
   }
 
   addRoutes(routes, parent) {
+   //routes e' parent.props.children e non e' un array di plain object.
+   //Occorre usare React.Children.map(),React.Children.forEach() per iterarli...
     React.Children.forEach(routes, route => this.addRoute(route, parent));
   }
 

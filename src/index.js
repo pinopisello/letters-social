@@ -17,15 +17,17 @@ const store = configureStore(initialReduxState);
 // Function that wraps ReactDOM.render and renders the app w/ current location
 export const renderApp = (state) => {
     ReactDOM(
+     //Route e' giusto uno shell component che contiene path, index e component 
+     
         <Provider store={store}>
-             <Router {...state}>
-        <Route  path="/" index={Home}       component={App}>
+          <Router {...state}>
+            <Route  path="/" index={Home}   component={App}> 
 	        <Route  path="posts/:post"      component={SinglePost} />
 	        <Route  path="login"            component={Login}  />
 	        <Route  path="profile"          component={Profile}  />
 	        <Route path="*"                 component={NotFound} />
-        </Route>
-    </Router>
+            </Route>
+          </Router>
         </Provider>,
     document.getElementById('app'),
   );
@@ -37,6 +39,8 @@ const initialState = {
 };
 
 // When there's a history change, re-render the app
+//Il routing da una pagina all altra [/profile => /  ; /post/434234 =>/profile] avviene attraverso il router
+//SENZA page reload.
 export function activateHistoryListener() {
     history.listen((location) => {
         // scroll to the top of the page when changing routes
@@ -66,4 +70,4 @@ export function activateAuthListener() {
 // Render the app initially
 renderApp(initialState);
 activateHistoryListener();
-activateAuthListener();
+//activateAuthListener();
