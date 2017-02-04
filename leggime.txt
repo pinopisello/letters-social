@@ -1,1 +1,81 @@
-https://babeljs.io/docs/usage/cli/#babel-node
+Implementa source code per capitoli 3-10 in React in Actions  [https://github.com/react-in-action/letters-social]
+
+In index.js commentati activateHistoryListener() e activateAuthListener() per evitare redirect a login page
+
+
+Build:   npm run build:app     (genera clientside in /dist bundle.js,styles.css,styles.css.map)
+         npm run build:server  (transpila server/run.js e server/app.js in dist/server)
+
+
+Run:     npm run start (lancia dist/server/run.js  si puo caricare localhost:3000 )  ps:copia public/index.html in dist
+
+
+Debug:  npm run start-webpack-dev-babel  (lancia /run/webpack-dev.js che lancia webpack-dev-server configurato da /build/webpack.config.js )
+        Dipende da npm run api:dev   per backend ...
+  
+  
+Node Scripts:
+
+1)########  npm run api:dev   
+
+Lancia json-server su porta 3500 [https://github.com/typicode/json-server] con :
+
+seed                 db/seed/db.json 
+custom routes        db/routes.json
+static files         db/backups
+
+Custom routes : "/api/:resource/:id": "/:resource/:id"
+
+Quindi /api/pippo/34 -> /pippo/34
+
+Prova pescare:
+
+http://localhost:3500/posts/c2f2f3db-7ea3-4c5a-b3d9-f85dbd0da30c
+http://localhost:3500/api/posts/c2f2f3db-7ea3-4c5a-b3d9-f85dbd0da30c
+ 
+
+2)########   npm run client:dev  / npm run start:dev
+
+lancia babel-node run/dev.js 
+
+a)Crea un webpack  compiler con /build/webpack.config.js  [https://webpack.js.org/api/node/#compiler-instance]
+b)lancia browserSyncsu porta 3000 via api con webpackDevMiddleware(compiler)
+
+Sembra la copia di webpack-dev-server ... da investigare ...
+
+3)########  npm run build:app
+
+Esegue babel-node build/build.js
+
+lancia webpack con webpack.config.prod e genera la production version in /dist
+
+
+
+4)#############  npm run build:server  [transpila server/run.js e server/app.js in dist/server/]
+
+Esegue babel server/*.js --babelrc=true --ignore='node_modules, coverage, docs, dist' --compact='true' --minified --no-comments --out-dir dist"
+
+a)server/app.js  definisce express con svariati middlewares [logger,bodyParser,etc] e server i paths:
+
+  '/api', jsonAPI.router(join(__dirname, '..', '..', 'db', 'seed', 'db.json')));
+  '/', express.static(resolve(__dirname, '..')));
+
+Il transpilato viene messo in dist/server/app.js
+
+
+b)server/run.js carica app.js , assegan porta 3000 e lo lancia con :
+const server = http.createServer(app);
+server.listen(port);  
+
+Il transpilato viene messo in dist/server/run.js
+
+
+5)############ npm run start
+
+node --optimize_for_size dist/server/run.js
+
+Sempilcemente esegue dist/server/run.js 
+
+
+
+

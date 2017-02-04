@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Filter from 'bad-words';
-
-const filter = new Filter();
+ 
+const filter = new Filter();  
 
 class CreatePost extends React.Component {
   constructor(props) {
@@ -14,8 +14,8 @@ class CreatePost extends React.Component {
     };
 
     // Set up event handlers
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handlePostChange = this.handlePostChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);          //Function.prototype.bind()  quando handleSubmit e' invocato, this riferira' a questo component invece che undefined!
+    this.handlePostChange = this.handlePostChange.bind(this);  //Function.prototype.bind()  quando handlePostChange e' invocato, this riferira' a questo component invece che undefined!
   }
 
   handlePostChange(event) {
@@ -31,7 +31,7 @@ class CreatePost extends React.Component {
     if (!this.state.valid) {
       return;
     }
-    if (this.props.onSubmit) {
+    if (this.props.onSubmit) {//Vedi containers/Home.js
       const newPost = {
         date: Date.now(),
         // Assign a temporary key to the post; the API will create a real one for us

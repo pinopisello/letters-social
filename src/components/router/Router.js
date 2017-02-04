@@ -23,9 +23,11 @@ export class Router extends Component {
     // Add all the children components to the routes
     this.addRoutes(props.children);
 
-    console.info('Routes are:', this.routes);
+    console.info('Router constructor(): Routes are:', this.routes);
 
     // Set up the router for matching & routing
+    //https://github.com/lapwinglabs/enroute
+    //Viene usato in render()
     this.router = enroute(this.routes);
   }
 
@@ -98,9 +100,10 @@ export class Router extends Component {
   }
 
   render() {
-    const { location } = this.props;
-    console.log(location);
-    invariant(location, '<Router/> needs a location to work');
-    return this.router(location);
+    const { location } = this.props;  //viene settata in src/index.js  location: window.location.pathname
+    console.log(`Router.render(${location})`);
+    invariant(location, '<Router/> needs a location to work');//se location e' falsy e process.env.NODE_ENV=='production' lancia errore
+    let matching_route = this.router(location);  //router = enroute(this.routes)  
+    return matching_route;
   }
 }

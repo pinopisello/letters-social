@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
-
+import { render  as ReactDOM} from 'react-dom';
 import { App } from './containers/App';
 import { Home, SinglePost, Login, NotFound, Profile } from './containers';
 import { Router, Route } from './components/router';
@@ -11,31 +10,21 @@ import './styles/styles.scss';
 
 // Function that wraps ReactDOM.render and renders the app w/ current location
 export const renderApp = (state) => {
-  render(
+	ReactDOM(
     <Router {...state}>
-      <Route
-        path="/"
-        index={Home}
-        component={App}>
-        <Route
-          path="posts/:post"
-          component={SinglePost} />
-        <Route
-          path="login" 
-          component={Login}
-        />
-        <Route
-          component={Profile}
-          path="profile"
-        />
-        <Route path="*" component={NotFound} />
-      </Route>
+        <Route  path="/" index={Home}       component={App}>
+	        <Route  path="posts/:post"      component={SinglePost} />
+	        <Route  path="login"            component={Login}  />
+	        <Route  path="profile"          component={Profile}  />
+	        <Route path="*"                 component={NotFound} />
+        </Route>
     </Router>,
     document.getElementById('app'),
   );
 };
 
 // Create an intial state object to use
+console.log(`src/index.js location = ${window.location.pathname}`);
 const initialState = {
   location: window.location.pathname,
 };
@@ -67,5 +56,5 @@ export function activateAuthListener() {
 
 // Render the app initially
 renderApp(initialState);
-activateHistoryListener();
-activateAuthListener();
+//activateHistoryListener();
+//activateAuthListener();

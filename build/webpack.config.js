@@ -11,8 +11,7 @@ const GLOBALS = {
 export default {
   devtool: 'source-map',
   entry: [
-    'webpack-hot-middleware/client?reload=true',
-    './src/index',
+    './src/index'
   ],
   cache: true,
   target: 'web',

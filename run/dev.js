@@ -5,17 +5,18 @@ import historyApiFallback from 'connect-history-api-fallback';
 import browserSync from 'browser-sync';
 import config from '../build/webpack.config.js';
 
+//Genero un webpack compiler : https://webpack.js.org/api/node/#compiler-instance
+//https://webpack.js.org/configuration/
 const bundler = webpack(config);
 
 // Run Browsersync and use middleware for Hot Module Replacement
 browserSync({
   open: false,
-  server: {
+  server: {  //https://browsersync.io/docs/options#option-server
     baseDir: 'src',
-
-    middleware: [
+    middleware: [  //https://browsersync.io/docs/options#option-middleware
       historyApiFallback(),
-      webpackDevMiddleware(bundler, {
+      webpackDevMiddleware(bundler, {//https://github.com/webpack/webpack-dev-middleware#what-is-it
         hot: true,
         historyApiFallback: true,
         publicPath: config.output.publicPath,

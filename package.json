@@ -24,6 +24,7 @@
     "rundep": "react-scripts start",
     "test": "npm run client:test && npm run coverage",
     "start": "node --optimize_for_size dist/server/run.js",
+    "start-webpack-dev-babel": "babel-node run/webpack-dev.js",
     "welcome": "node run/welcome.js"
   },
   "jest": {

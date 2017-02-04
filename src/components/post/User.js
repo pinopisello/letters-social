@@ -23,7 +23,7 @@ const User = (props) => {
           </div>
         :
           <span>
-            Anonymous user <i className="fa fa-user" />
+             Anonymous user <i className="fa fa-user" />
           </span>
       }
     </div>
